@@ -1,105 +1,77 @@
 ### Introduction
 
-This second programming assignment will require you to write an R
-function that is able to cache potentially time-consuming computations.
-For example, taking the mean of a numeric vector is typically a fast
-operation. However, for a very long vector, it may take too long to
-compute the mean, especially if it has to be computed repeatedly (e.g.
-in a loop). If the contents of a vector are not changing, it may make
-sense to cache the value of the mean so that when we need it again, it
-can be looked up in the cache rather than recomputed. In this
-Programming Assignment you will take advantage of the scoping rules of
-the R language and how they can be manipulated to preserve state inside
-of an R object.
+In this programming assignment carried out during the R-programming course
+of Coursera, a set of functions was developped able to cache potentially 
+time-consuming computations.In the functions at hand the inverse matrix
+pertaining to some given matrix is calculated and subsequently cached.
+This appears to be handy in particular those cases where the given matrix
+has not changed and we are in need of the inverse matrix over and over 
+again. Latter can happen in for instance loops. Avoiding time-consuming
+recalculations of the inverse matrix, but instead reading it from cache
+can be advantageous especially from a performance point of view.
 
-### Example: Caching the Mean of a Vector
 
-In this example we introduce the `<<-` operator which can be used to
-assign a value to an object in an environment that is different from the
-current environment. Below are two functions that are used to create a
-special object that stores a numeric vector and caches its mean.
+### Caching the Inverse Matrix pertaining to a given Matrix
 
-The first function, `makeVector` creates a special "vector", which is
-really a list containing a function to
+In the functions to be developped we will use the `<<-` operator which 
+can be used to assign a value to an object in an environment that is 
+different from the current environment. 
 
-1.  set the value of the vector
-2.  get the value of the vector
-3.  set the value of the mean
-4.  get the value of the mean
+The two functions specified here determine a matrix and its inverse.
+Latter matrix is calculated via the cacheSolve function and subsequently
+cached via the makeCacheMatrix functions, thus avoiding time consuming
+recalculations of the matrix inverse.
+The plural functionS is used here because we take advantage of the R 
+capability of storing functions within functions.
 
-<!-- -->
+The makeCacheMatrix function defines the matrix (x) to start of with.
+Apart from this, this function acts as a constructor function for 4 other 
+functions.These functions are used to
+   SET (define) another matrix, i.e. one that is different from the original 
+        matrix (x) within this function the new matrix (y) is assigned to x.
+   GET the matrix (x) at hand
+   SETINVERSE assigns the calculated inverse matrix to the MTI object 
+        (Note: MTI is short for MaTrix Inverse)
+   GETINVERSE reads the MTI object from cache when available.
+These functions together are stored in a list object and act as the 
+return object of the constructor function makeCacheMatrix. This means
+that by for instance assigning the object `a` to the function call of 
+makeCacheMatrix, the above mentioned constituent functios can be called
+via a$set(y), a$get() etc.
 
-    makeVector <- function(x = numeric()) {
-            m <- NULL
-            set <- function(y) {
-                    x <<- y
-                    m <<- NULL
-            }
-            get <- function() x
-            setmean <- function(mean) m <<- mean
-            getmean <- function() m
-            list(set = set, get = get,
-                 setmean = setmean,
-                 getmean = getmean)
-    }
+The cacheSolve function uses the functions defined in the constructor function 
+makeCacheMatrix.It reads the inverse matrix pertaining to the matrix
+at hand, from cache when available. If it is available this function
+uses this inverse matrix as its return object.
+If its not available the inverse matrix is calculated and cached using
+the setInverse function from the makeCacheMatrix.
 
-The following function calculates the mean of the special "vector"
-created with the above function. However, it first checks to see if the
-mean has already been calculated. If so, it `get`s the mean from the
-cache and skips the computation. Otherwise, it calculates the mean of
-the data and sets the value of the mean in the cache via the `setmean`
-function.
+For more detailed and step by step comments we refer to the cacheMatrix.R 
+file containing the R script files for the makeCacheMatrix 
+and cacheSolve functions.
 
-    cachemean <- function(x, ...) {
-            m <- x$getmean()
-            if(!is.null(m)) {
-                    message("getting cached data")
-                    return(m)
-            }
-            data <- x$get()
-            m <- mean(data, ...)
-            x$setmean(m)
-            m
-    }
 
-### Assignment: Caching the Inverse of a Matrix
+### Testing the functions
 
-Matrix inversion is usually a costly computation and there may be some
-benefit to caching the inverse of a matrix rather than computing it
-repeatedly (there are also alternatives to matrix inversion that we will
-not discuss here). Your assignment is to write a pair of functions that
-cache the inverse of a matrix.
+The following testscripts can be used for verification.
+Copy paste the data in a R-script and run this script after you have
+sourced the makeCacheMatrix and cacheSolve functions respectively.
 
-Write the following functions:
-
-1.  `makeCacheMatrix`: This function creates a special "matrix" object
-    that can cache its inverse.
-2.  `cacheSolve`: This function computes the inverse of the special
-    "matrix" returned by `makeCacheMatrix` above. If the inverse has
-    already been calculated (and the matrix has not changed), then
-    `cacheSolve` should retrieve the inverse from the cache.
-
-Computing the inverse of a square matrix can be done with the `solve`
-function in R. For example, if `X` is a square invertible matrix, then
-`solve(X)` returns its inverse.
-
-For this assignment, assume that the matrix supplied is always
-invertible.
-
-In order to complete this assignment, you must do the following:
-
-1.  Fork the GitHub repository containing the stub R files at
-    [https://github.com/rdpeng/ProgrammingAssignment2](https://github.com/rdpeng/ProgrammingAssignment2)
-    to create a copy under your own account.
-2.  Clone your forked GitHub repository to your computer so that you can
-    edit the files locally on your own machine.
-3.  Edit the R file contained in the git repository and place your
-    solution in that file (please do not rename the file).
-4.  Commit your completed R file into YOUR git repository and push your
-    git branch to the GitHub repository under your account.
-5.  Submit to Coursera the URL to your GitHub repository that contains
-    the completed R code for the assignment.
-
-### Grading
-
-This assignment will be graded via peer assessment.
+MT<-matrix(1:4,2,2)        # specify an example
+a<-makeCacheMatrix(MT)     # run the makeCacheMatrix function on MT
+a$get()                    # the get function echos the matrix MT
+a$getInverse()             # verify that the inverse has not yet been caculated
+cacheSolve(a)              # run cacheSolve on MT which caculates and caches the inverse.
+cacheSolve(a)              # run cacheSolve oncemore: the inverse now was read from cache!!
+MT%*%cacheSolve(a)         # prove that MT and cacheSolve are each others inverse
+                           # matrix multiplication should give rise to the Unity matrix
+                           # consisting of zero's everywhere and only one's on its main diagonal
+MT<-a$set(matrix(2:5,2,2)) # change the original matrix
+a<-makeCacheMatrix(MT)     # run the makeCacheMatrix function on the new MT
+a$get()                    # the get function echos the new matrix MT
+a$getInverse()             # verify that the inverse of this matrix has not yet been caculated
+cacheSolve(a)              # run cacheSolve on MT which caculates and caches the inverse.
+cacheSolve(a)              # run cacheSolve oncemore: the inverse now was read from cache!!
+MT%*%cacheSolve(a)         # prove that MT and cacheSolve are each others inverse
+                           # matrix multiplication should give rise to the Unity matrix
+                           # consisting of zero's everywhere and only one's on its main diagonal

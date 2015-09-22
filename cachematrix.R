@@ -1,7 +1,7 @@
 ## The two functions specified here determine a matrix and its inverse.
 ## Latter matrix is calculated via the cacheSolve function and subsequently
 ## cached via the makeCacheMatrix functions, thus avoiding time consuming
-## recalculations if the matrix inverse.
+## recalculations of the matrix inverse.
 ## The plural functionS is used here because we take advantage of the R 
 ## capability of storing functions within functions.
 
@@ -36,9 +36,9 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-## This function uses the functions defined in the constructor function 
+## The cacheSolve function uses the functions defined in the constructor function 
 ## makeCacheMatrix.It reads the inverse matrix pertaining to the matrix
-## at hand, from cache when available.If it is available this function
+## at hand, from cache when available. If it is available this function
 ## uses this inverse matrix as its return object.
 ## If its not available the inverse matrix is calculated and cached using
 ## the setInverse function from the makeCacheMatrix.
