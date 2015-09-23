@@ -18,7 +18,7 @@
 ## These functions together are stored in a list object and act as the 
 ## return object of the constructor function makeCacheMatrix. This means
 ## that by for instance assigning the object `a` to the function call of 
-## makeCacheMatrix, the above mentioned constituent functios can be called
+## makeCacheMatrix, the above mentioned constituent functions can be called
 ## via a$set(y), a$get() etc.
 
 makeCacheMatrix <- function(x = matrix()) {
