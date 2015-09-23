@@ -57,22 +57,21 @@ The following testscripts can be used for verification.
 Copy paste the data in a R-script and run this script after you have
 sourced the makeCacheMatrix and cacheSolve functions respectively.
 
---------------|-------------
-MT<-matrix(1:4,2,2) | # specify an example
-a<-makeCacheMatrix(MT) | # run the makeCacheMatrix function on MT
-a$get() | # the get function echos the matrix MT
-a$getInverse() | # verify that the inverse has not yet been caculated
-cacheSolve(a) | # run cacheSolve on MT which caculates and caches the inverse.
-cacheSolve(a) | # run cacheSolve oncemore: the inverse now was read from cache!!
-MT%*%cacheSolve(a) | # prove that MT and cacheSolve are each others inverse
- | # matrix multiplication should give rise to the Unity matrix
- | # consisting of zero's everywhere and only one's on its main diagonal
-MT<-matrix(2:5,2,2) | # specify another example
-a$set(MT) | # change the original matrix (assigment <<- is used here!!!)
-a$get() | # the get function echos the new matrix MT
-a$getInverse() | # verify that the inverse of this matrix has not yet been caculated
-cacheSolve(a) | # run cacheSolve on MT which caculates and caches the inverse.
-cacheSolve(a) | # run cacheSolve oncemore: the inverse now was read from cache!!
-MT%*%cacheSolve(a) | # prove that MT and cacheSolve are each others inverse
- | # matrix multiplication should give rise to the Unity matrix
- | # consisting of zero's everywhere and only one's on its main diagonal
+#####MT<-matrix(1:4,2,2)        # specify an example
+#####a<-makeCacheMatrix(MT)     # run the makeCacheMatrix function on MT
+#####a$get()                    # the get function echos the matrix MT
+#####a$getInverse()             # verify that the inverse has not yet been caculated
+#####cacheSolve(a)              # run cacheSolve on MT which caculates and caches the inverse.
+#####cacheSolve(a)              # run cacheSolve oncemore: the inverse now was read from cache!!
+#####MT%*%cacheSolve(a)         # prove that MT and cacheSolve are each others inverse
+                           # matrix multiplication should give rise to the Unity matrix
+                           # consisting of zero's everywhere and only one's on its main diagonal
+#####MT<-matrix(2:5,2,2)        # specify another example
+#####a$set(MT)                  # change the original matrix (assigment <<- is used here!!!)
+#####a$get()                    # the get function echos the new matrix MT
+#####a$getInverse()             # verify that the inverse of this matrix has not yet been caculated
+#####cacheSolve(a)              # run cacheSolve on MT which caculates and caches the inverse.
+#####cacheSolve(a)              # run cacheSolve oncemore: the inverse now was read from cache!!
+#####MT%*%cacheSolve(a)         # prove that MT and cacheSolve are each others inverse
+                           # matrix multiplication should give rise to the Unity matrix
+                           # consisting of zero's everywhere and only one's on its main diagonal
