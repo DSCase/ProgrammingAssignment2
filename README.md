@@ -57,8 +57,8 @@ The following testscripts can be used for verification.
 Copy paste the data in a R-script and run this script after you have
 sourced the makeCacheMatrix and cacheSolve functions respectively.
 
+--------------|-------------
 MT<-matrix(1:4,2,2) | # specify an example
-
 a<-makeCacheMatrix(MT) | # run the makeCacheMatrix function on MT
 a$get() | # the get function echos the matrix MT
 a$getInverse() | # verify that the inverse has not yet been caculated
