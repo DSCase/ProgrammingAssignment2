@@ -8,13 +8,9 @@
 
 ## The makeCacheMatrix function defines the matrix (x) to start of with.
 ## Apart from this, this function acts as a constructor function for 4 other 
-## functions.These functions are used to
-##   SET (define) another matrix, i.e. one that is different from the original 
-##        matrix (x) within this function the new matrix (y) is assigned to x.
-##   GET the matrix (x) at hand
-##   SETINVERSE assigns the calculated inverse matrix to the MTI object 
-##        (Note: MTI is short for MaTrix Inverse)
-##   GETINVERSE reads the MTI object from cache when available.
+## functions.These functions are used to *set* or *get* a matrix (set and get)
+## or to *set* or *get* its inverse (setInverse and getInverse)
+## 
 ## These functions together are stored in a list object and act as the 
 ## return object of the constructor function makeCacheMatrix. This means
 ## that by for instance assigning the object `a` to the function call of 

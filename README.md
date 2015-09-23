@@ -64,7 +64,7 @@ sourced the makeCacheMatrix and cacheSolve functions respectively.
 ######cacheSolve(a)              # run cacheSolve on MT which caculates and caches the inverse.
 ######cacheSolve(a)              # run cacheSolve oncemore: the inverse now was read from cache!!
 ######MT%*%cacheSolve(a)         # prove that MT and cacheSolve are each others inverse
-# matrix multiplication should give rise to the Unity matrix 0's everywhere, 1's on main diagonal
+###### # matrix multiplication should give rise to the Unity matrix 0's everywhere, 1's on main diagonal
 
 ######MT<-matrix(2:5,2,2)        # specify another example
 ######a$set(MT)                  # change the original matrix (assigment <<- is used here!!!)
@@ -73,6 +73,6 @@ sourced the makeCacheMatrix and cacheSolve functions respectively.
 ######cacheSolve(a)              # run cacheSolve on MT which caculates and caches the inverse.
 ######cacheSolve(a)              # run cacheSolve oncemore: the inverse now was read from cache!!
 ######MT%*%cacheSolve(a)         # prove that MT and cacheSolve are each others inverse
-# matrix multiplication should give rise to the Unity matrix 0's everywhere, 1's on main diagonal
+###### # matrix multiplication should give rise to the Unity matrix 0's everywhere, 1's on main diagonal
 
            
